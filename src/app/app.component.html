@@ -1,20 +1,55 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div class='search'>
+<label for ='search'>Search: </label>
+<input id= 'search' type="text" [(ngModel)]="searchFilter" placeholder="Search">
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<table>
+  <thead>
+    <tr class='row-border'>
+      <th class="cell-border" scope='col' *ngFor='let header of tableHeaders'>
+        <span>{{header}}</span>
+        <div *ngIf ='header !=="MultiValue" && header !=="Reference"' class='sort-arrows'>
+        <div (click) = 'increase(header)' class="arrow-up">
+        </div> 
+        <div (click)='decrease(header)' class="arrow-down">
+        </div>
+        </div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr  class="row-border" *ngFor='let row of displayRowArray| filter: searchFilter;let i = index;trackBy:trackByFn'>
+      <td class='cell-width cell-border'>{{row[tableHeaders[0]]}}</td>
+      <td class='cell-width cell-border'>{{row[tableHeaders[1]]}}</td>
+      <td class='cell-width cell-border'>{{row[tableHeaders[2]]}}</td>
+      <td class='cell-width cell-border'>{{row[tableHeaders[3]]}}</td>
+      <td class='cell-width cell-border'>
+        <div *ngFor='let value of convertToArray(row[tableHeaders[4]])'>
+          {{ value }}
+        </div>
+      </td>
+      <td class="cell-border">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col" *ngFor='let key of getObjectKeys(row[tableHeaders[5]])'>{{key}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class='cell-width' *ngFor='let value of convertToArray(row[tableHeaders[5]])'>
+                <div>{{value.Date1}}</div>
+                <div>{{value.Date2}}</div>
+                <div>{{value.Date3}}</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
 
+</table>
+<div class='pagination'>
+<button [ngClass]='{"highlight":currentPage === value}' *ngFor='let value of paginationButtonArray' (click)='showPageItems(value)'>{{value}}</button>
+</div>
+<p class='item-count'>Showing {{((currentPage-1)*paginationIncrement+1)+'-' + ((currentPage-1)*paginationIncrement+displayRowArray.length)}} of {{rowArray.length}}</p>

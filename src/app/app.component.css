@@ -1,0 +1,49 @@
+td{
+    height: 20vh;
+    text-align: center;
+}
+.cell-width{
+    width:8vw;
+}
+.cell-border{
+    border:1px solid gray;
+}
+table{
+    border-collapse: collapse;
+    font-size:1vw;
+} 
+.search{
+    margin:10px;
+}
+.pagination{
+    margin-top:20px;
+    margin-left: 30px;
+}
+
+.arrow-down {
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;  
+    border-top: 10px solid red;
+    cursor: pointer;
+  }
+
+  .arrow-up {
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid green;
+    margin-bottom:20px ;
+    cursor: pointer;
+  }
+  .highlight{
+      background:rgb(3, 54, 75);
+      color:white;
+      border:0px;
+  }
+  .sort-arrows{
+      width:20px;
+      float:left;
+  }
